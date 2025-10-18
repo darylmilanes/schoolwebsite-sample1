@@ -11,53 +11,76 @@ document.addEventListener('DOMContentLoaded', function() {
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Mobile header hide/show on scroll with lock across navigation
-  let lastScroll = window.pageYOffset || document.documentElement.scrollTop;
   const header = document.querySelector('header');
+  let lastScroll = window.pageYOffset || document.documentElement.scrollTop;
   let ticking = false;
 
-  // detect navigation type: if this load is a reload, clear lock
-  let navigationType = 'navigate';
+  // Determine current file (used for home vs other pages)
+  const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+  const isHome = (currentFile === '' || currentFile === 'index.html' || currentFile === '/');
+
+  // If this load is a reload, clear lock so reload always shows header
   try {
-    const nav = performance.getEntriesByType && performance.getEntriesByType('navigation');
-    if (nav && nav.length) navigationType = nav[0].type; // 'navigate' | 'reload' | 'back_forward' | 'prerender'
-    else if (performance.navigation) navigationType = (performance.navigation.type === 1) ? 'reload' : 'navigate';
+    const navEntries = performance.getEntriesByType ? performance.getEntriesByType('navigation') : null;
+    const navType = navEntries && navEntries.length ? navEntries[0].type : (performance.navigation && performance.navigation.type === 1 ? 'reload' : 'navigate');
+    if (navType === 'reload') {
+      sessionStorage.removeItem('hideHeader');
+      sessionStorage.removeItem('hideHeaderLocked');
+    }
   } catch (e) {
     // ignore
   }
 
-  if (navigationType === 'reload') {
-    sessionStorage.removeItem('hideHeader');
-    sessionStorage.removeItem('hideHeaderLocked');
-  }
+  // On mobile, restore hide state only for non-home pages when locked
+  if (window.innerWidth <= 700 && header) {
+    const locked = sessionStorage.getItem('hideHeaderLocked') === 'true';
+    const hidden = sessionStorage.getItem('hideHeader') === 'true';
 
-  // restore hide state from session if present
-  if (window.innerWidth <= 700 && sessionStorage.getItem('hideHeader') === 'true' && header) {
-    header.classList.add('hide-header');
+    if (isHome) {
+      // Home: never keep locked hidden state; reset any locks
+      sessionStorage.removeItem('hideHeaderLocked');
+      // If hidden was set, clear it so header shows on home
+      if (hidden) {
+        sessionStorage.setItem('hideHeader', 'false');
+        header.classList.remove('hide-header');
+      }
+    } else {
+      // Not home: restore hidden state if previously hidden
+      if (hidden) header.classList.add('hide-header');
+    }
   }
 
   function onScroll() {
     const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
-    // only on small screens
     if (window.innerWidth <= 700 && header) {
       const isLocked = sessionStorage.getItem('hideHeaderLocked') === 'true';
 
       if (currentScroll > lastScroll && currentScroll > 50) {
-        // scrolling down -> hide brand and lock the hidden state across navigation
+        // scrolling down -> hide brand
         header.classList.add('hide-header');
         sessionStorage.setItem('hideHeader', 'true');
-        sessionStorage.setItem('hideHeaderLocked', 'true');
+
+        if (!isHome) {
+          // lock hidden state for non-home pages
+          sessionStorage.setItem('hideHeaderLocked', 'true');
+        }
       } else {
-        // scrolling up -> show brand only if not locked
-        if (!isLocked) {
+        // scrolling up
+        if (isHome) {
+          // on home page, show header when scrolling up (no lock)
           header.classList.remove('hide-header');
           sessionStorage.setItem('hideHeader', 'false');
+        } else {
+          // on other pages, only reveal if not locked
+          if (!isLocked) {
+            header.classList.remove('hide-header');
+            sessionStorage.setItem('hideHeader', 'false');
+          }
         }
-        // if locked, do not reveal header on scroll up
       }
     } else if (header) {
-      // ensure header is visible on larger screens or when resized
+      // ensure header visible on larger screens
       header.classList.remove('hide-header');
       sessionStorage.setItem('hideHeader', 'false');
       sessionStorage.removeItem('hideHeaderLocked');
@@ -86,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Set active navbar item based on current URL and update on click
   const navLinks = Array.from(document.querySelectorAll('nav .menu a'));
   function updateActiveNav() {
-    const currentFile = window.location.pathname.split('/').pop() || 'index.html';
     navLinks.forEach(link => {
       const linkFile = (link.getAttribute('href') || '').split('/').pop();
       if (linkFile === currentFile) {
