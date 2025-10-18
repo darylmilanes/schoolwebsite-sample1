@@ -465,3 +465,43 @@ li { word-wrap: break-word; }
   #enrollment-procedure .cta-block ol { margin-top: 0.75rem; padding-left: 1.25rem; }
   #application-requirements .cta-block ul { margin-top: 0.75rem; padding-left: 1.25rem; }
 }
+
+/* Mobile: move navbar to bottom, hide original footer, and disable header sticky */
+@media (max-width:700px) {
+  /* hide original footer */
+  footer { display: none; }
+
+  /* ensure header is not sticky on mobile */
+  header { position: static !important; }
+
+  /* make the navigation menu act as a sticky footer */
+  .menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    background: #004080;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.12);
+    z-index: 1100;
+  }
+
+  /* adjust menu links for touch */
+  .menu a {
+    margin-left: 0;
+    padding: 10px 12px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  /* keep brand visible but reduce spacing so it doesn't collide with bottom menu */
+  .brand { margin-bottom: 12px; }
+
+  /* make space for the fixed menu so content doesn't get hidden */
+  body { padding-bottom: 96px; }
+}
