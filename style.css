@@ -334,7 +334,7 @@ li { word-wrap: break-word; }
 
   /* Hide header utility for mobile scroll behavior */
   .hide-header {
-    transform: translateY(-75%);
+    transform: none !important;
   }
 
   .about-hero h2 { font-size: 1.4rem; }
