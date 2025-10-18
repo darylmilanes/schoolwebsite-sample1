@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Programs - Philippine University</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">
+        <a href="index.html"><img src="logo.png" alt="Logo"></a>
+        <h1>Philippine University</h1>
+      </div>
+      <div class="menu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="programs.html">Programs</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="programs-page container">
+    <section class="programs-hero">
+      <h2>Explore Our Programs</h2>
+      <p>Our programs are designed to prepare students for careers in rapidly evolving industries. Browse by category or explore featured programs below.</p>
+      <a class="cta" href="admission.html">Apply / Request Info</a>
+    </section>
+
+    <section class="programs-controls">
+      <div class="program-filters" role="tablist" aria-label="Program categories">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="it">Information Technology</button>
+        <button class="filter-btn" data-filter="business">Business</button>
+        <button class="filter-btn" data-filter="arts">Arts & Design</button>
+        <button class="filter-btn" data-filter="science">Science</button>
+      </div>
+    </section>
+
+    <section class="programs-grid">
+      <article class="program-card prog-photo" data-category="it">
+        <img src="image.png" alt="Bachelor of Science in Information Technology">
+        <div class="prog-body">
+          <h3>B.Sc. Information Technology</h3>
+          <p>Learn software development, networks, and cloud technologies to become industry-ready.</p>
+          <a class="cta" href="#">Learn More</a>
+        </div>
+      </article>
+
+      <article class="program-card prog-photo" data-category="business">
+        <img src="image.png" alt="Bachelor of Science in Business Administration">
+        <div class="prog-body">
+          <h3>B.Sc. Business Administration</h3>
+          <p>Build leadership, management, and entrepreneurial skills with real-world projects.</p>
+          <a class="cta" href="#">Learn More</a>
+        </div>
+      </article>
+
+      <article class="program-card prog-photo" data-category="arts">
+        <img src="image.png" alt="Bachelor of Arts in Design">
+        <div class="prog-body">
+          <h3>B.A. Design</h3>
+          <p>Develop creative and technical skills in visual communication, UX, and multimedia.</p>
+          <a class="cta" href="#">Learn More</a>
+        </div>
+      </article>
+
+      <article class="program-card prog-photo" data-category="science">
+        <img src="image.png" alt="Bachelor of Science in Biology">
+        <div class="prog-body">
+          <h3>B.Sc. Biology</h3>
+          <p>Strong foundation in life sciences with opportunities for research and internships.</p>
+          <a class="cta" href="#">Learn More</a>
+        </div>
+      </article>
+
+      <article class="program-card prog-photo" data-category="it">
+        <img src="image.png" alt="Associate in Cybersecurity">
+        <div class="prog-body">
+          <h3>Cybersecurity (Associate)</h3>
+          <p>Hands-on training in security fundamentals, ethical hacking, and risk management.</p>
+          <a class="cta" href="#">Learn More</a>
+        </div>
+      </article>
+
+      <article class="program-card prog-photo" data-category="business">
+        <img src="image.png" alt="Master of Business Administration">
+        <div class="prog-body">
+          <h3>MBA</h3>
+          <p>Advance your career with strategic management, finance, and leadership coursework.</p>
+          <a class="cta" href="#">Learn More</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="programs-cta container">
+      <div class="cta-block">
+        <h3>Ready to join?</h3>
+        <p>Contact our admissions team for program-specific guidance, scholarships, and campus tours.</p>
+        <a class="cta" href="admission.html">Start Your Application</a>
+      </div>
+    </section>
+
+    <!-- Enrollment procedure & application requirements (moved from Admission page) -->
+    <section id="enrollment-procedure" class="programs-cta container">
+      <div class="cta-block">
+        <h3>Enrollment Procedure</h3>
+        <ol>
+          <li>Choose a Program — Review our programs and select the course that matches your goals.</li>
+          <li>Prepare Documents — Gather transcripts, ID, and other supporting documents as listed below.</li>
+          <li>Submit Application — Complete the online form or contact Admissions for guidance.</li>
+          <li>Assessment &amp; Enrollment — Attend required assessments/interviews and complete enrollment upon acceptance.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="application-requirements" class="programs-cta container">
+      <div class="cta-block">
+        <h3>Application Requirements</h3>
+        <ul>
+          <li>Completed application form</li>
+          <li>Official high school or college transcript</li>
+          <li>Government-issued ID (passport or national ID)</li>
+          <li>2 passport-sized photos</li>
+          <li>Proof of residency or address</li>
+          <li>Additional program-specific requirements (if applicable)</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Philippine University. All rights reserved.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

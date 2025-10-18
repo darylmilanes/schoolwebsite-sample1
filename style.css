@@ -1,0 +1,467 @@
+/* Basic reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; line-height: 1.6; color:#333; padding-bottom: 96px; }
+
+/* Preloader */
+#preloader { position: fixed; inset: 0; display:flex; align-items:center; justify-content:center; background:#fff; z-index:9999; }
+#preloader img { width:120px; height:auto; }
+
+/* Header */
+header {
+  background: #004080;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: transform 0.25s ease;
+}
+nav { display:flex; align-items:center; justify-content:space-between; padding: 1rem 2rem; }
+.brand { display:flex; align-items:center; gap:1rem; }
+.brand img { width:50px; height:auto; }
+.menu a { color:#fff; margin-left:1rem; text-decoration:none; }
+
+/* Accent underline for active navbar item */
+.menu a { position: relative; padding-bottom: 6px; }
+.menu a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  bottom: -6px;
+  border-radius: 3px;
+  background: transparent;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+.menu a:hover::after { background: #ff8a3d; transform: scaleX(1); }
+.menu a.active { color: #ff8a3d; }
+.menu a.active::after { background: #ff8a3d; transform: scaleX(1); }
+
+/* Accessible accent for current navbar page using aria-current */
+.menu a[aria-current="page"] {
+  color: #ff8a3d;
+}
+.menu a[aria-current="page"]::after {
+  background: #ff8a3d;
+  transform: scaleX(1);
+}
+
+/* Hero */
+.hero { text-align:center; padding:3rem 1rem; background:#f5f7fa; }
+.hero img { max-width:100%; height:auto; display:block; margin:0 auto 1rem; }
+.hero h2 { font-size:2rem; margin-bottom:0.5rem; }
+.hero p { max-width:700px; margin:0.5rem auto 1rem; }
+.cta { display:inline-block; background:#007acc; color:#fff; padding:0.75rem 1.25rem; text-decoration:none; border-radius:4px; }
+
+/* Utility container */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+
+/* About page */
+.about-hero { padding: 3rem 0; background: linear-gradient(180deg, #f5f7fa 0%, #fff 100%); text-align:center; }
+.about-hero h2 { font-size: 1.8rem; color: #004080; margin-bottom: 0.5rem; }
+.about-hero p { max-width: 800px; margin: 0.5rem auto; color:#444; }
+
+.about-content { padding: 2rem 0 4rem; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.card.full { grid-column: span 3; }
+.card h3 { color: #004080; margin-bottom: 0.5rem; }
+.card p { color: #555; }
+
+/* About page - improved card layout */
+.about-content .grid {
+  align-items: stretch; /* make all grid items equal height */
+  gap: 1rem;
+}
+
+.about-content .card {
+  width: 100%;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Ensure the large/full card visually matches others but spans columns */
+.about-content .card.full {
+  min-height: 240px;
+}
+
+@media (max-width:900px) {
+  .about-content .card { min-height: 200px; }
+}
+
+@media (max-width:700px) {
+  .about-content .card { min-height: auto; padding: 1rem; }
+}
+
+/* Sections / cards */
+.sections { display:flex; gap:1rem; padding:2rem; justify-content:center; flex-wrap:wrap; }
+.card { background:#fff; padding:1rem; border-radius:8px; width:300px; box-shadow:0 2px 8px rgba(0,0,0,0.08); text-align:center; }
+.card img { width:80px; height:auto; margin-bottom:0.5rem; }
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  background: #0a2a4a;
+  color: #fff;
+  z-index: 1000;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.12);
+}
+
+/* Two-up layout for mission & vision */
+.two-up {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+  align-items: stretch;
+  justify-items: center;
+}
+
+/* Ensure two-up sits above history full-width */
+.grid > .two-up {
+  grid-column: 1 / -1; /* span full grid width so outer edges align with other full-width items */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+/* Constrain mission & vision card width on wide screens */
+.two-up .card {
+  width: 100%;
+  max-width: none; /* allow cards to fill their grid columns so outer edges align */
+}
+
+@media (max-width:900px) {
+  .two-up { flex-direction: column; display: flex; }
+  .two-up .card { max-width: none; }
+}
+
+/* Programs gallery */
+.programs-hero { text-align:center; padding:2rem 0; }
+.programs-hero h2 { color: #004080; margin-bottom: 0.5rem; }
+.programs-gallery { padding: 1rem 0 4rem; }
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.prog-photo { overflow: hidden; border-radius: 40px; transform: translateY(20px); opacity: 0; transition: transform 0.6s ease, opacity 0.6s ease; }
+.prog-photo img { display:block; width:100%; height:auto; border-radius: 40px; }
+.prog-photo.visible { transform: translateY(0); opacity: 1; }
+
+@media (max-width:900px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width:700px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+
+/* Programs page styles */
+.programs-hero { text-align:center; padding:2.5rem 0; }
+.programs-hero p { max-width: 800px; margin: 0.5rem auto 1rem; color:#444; }
+.programs-controls { display:flex; justify-content:center; padding: 0.5rem 0 1.5rem; }
+.program-filters { display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; }
+.filter-btn { background:#fff; border:1px solid #ddd; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600; }
+.filter-btn.active { background:#004080; color:#fff; border-color:#004080; }
+
+.programs-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; margin-bottom:2rem; }
+.program-card { background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,0.06); display:flex; flex-direction:column; }
+.program-card img { width:100%; height:180px; object-fit:cover; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-left-radius:16px; border-top-right-radius:16px; }
+.program-card .prog-body { padding:1rem; display:flex; flex-direction:column; gap:0.5rem; flex:1; }
+.program-card h3 { margin:0; color:#004080; }
+.program-card p { margin:0; color:#555; flex:1; }
+
+/* Prog-photo fade behavior reused */
+.prog-photo { border-radius: 16px; transform: translateY(20px); opacity: 0; transition: transform 0.6s ease, opacity 0.6s ease; overflow:hidden; }
+.prog-photo.visible { transform: translateY(0); opacity:1; }
+
+/* Disable prog-photo fade on the programs page */
+.programs-page .prog-photo {
+  transform: none !important;
+  opacity: 1 !important;
+  transition: none !important;
+}
+
+@media (max-width:900px) {
+  .programs-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width:700px) {
+  .programs-grid { grid-template-columns: 1fr; }
+}
+
+/* Admission page spacing and layout tweaks */
+.admission-page .admission-hero {
+  padding: 3.5rem 0 2.5rem;
+}
+
+.admission-page .admission-steps {
+  padding: 2rem 0;
+}
+
+.admission-page .admission-steps .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.admission-page .admission-steps .grid .card {
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.admission-page .admission-requirements,
+.admission-page .admission-form,
+.admission-page .admission-contact {
+  padding: 1.75rem 0;
+}
+
+.admission-page .admission-requirements ul {
+  margin-top: 0.5rem;
+  padding-left: 1.25rem;
+}
+
+/* CTA spacing */
+.admission-page .cta { margin-top: 0.75rem; }
+
+@media (max-width:900px) {
+  .admission-page .admission-steps .grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width:700px) {
+  .admission-page .admission-hero { padding: 2rem 0 1.5rem; }
+  .admission-page .admission-steps { padding: 1rem 0; }
+  .admission-page .admission-requirements,
+  .admission-page .admission-form,
+  .admission-page .admission-contact { padding: 1rem 0; }
+}
+
+/* Ensure lists have proper left indentation and bullets/numbers are outside */
+ul, ol {
+  list-style-position: outside;
+  padding-left: 1.25rem; /* primary indent */
+  margin-left: 0.5rem; /* small left margin to avoid gutter overflow */
+}
+
+/* Slightly larger indent for content inside container sections */
+.container ul, .container ol,
+.admission-page ul, .admission-page ol,
+.about-content ul, .about-content ol {
+  padding-left: 1.5rem;
+  margin-left: 0;
+}
+
+/* Improve wrapping for long list items */
+li { word-wrap: break-word; }
+
+/* Responsive */
+@media (max-width:700px) {
+  nav { flex-direction:column; gap:1rem; }
+  .sections { flex-direction:column; align-items:center; }
+
+  /* Reduce header padding and tighten spacing so navbar fits in one row */
+  nav {
+    padding: 0.5rem 1rem;
+  }
+
+  .menu {
+    display: flex;
+    gap: 0.5rem; /* smaller gap between items */
+    flex-wrap: nowrap; /* keep items in one row */
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .menu a {
+    margin-left: 0; /* remove extra left margin */
+    padding: 6px 8px;
+    white-space: nowrap;
+    font-size: 0.95rem;
+  }
+
+  /* Place logo above title and center on mobile */
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  /* Make header title slightly smaller and keep it to one line */
+  .brand h1 {
+    font-size: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* Make the logo a bit bigger on mobile */
+  .brand img {
+    width: 100px;
+    height: auto;
+    margin: 0;
+  }
+
+  /* Slightly smaller footer text for mobile */
+  footer {
+    font-size: 0.85rem;
+    height: 56px; /* reduced height for mobile */
+  }
+
+  /* Ensure body spacing matches reduced footer on mobile */
+  body { padding-bottom: 72px; }
+
+  /* Hide header utility for mobile scroll behavior */
+  .hide-header {
+    transform: translateY(-75%);
+  }
+
+  .about-hero h2 { font-size: 1.4rem; }
+  .about-hero { padding-top: 1.5rem; }
+}
+
+/* Stack logo, title, then navbar for tablets, iPads, unfolded phones */
+@media (max-width:1024px) and (min-width:701px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .brand img {
+    width: 72px;
+    height: auto;
+  }
+
+  .brand h1 {
+    font-size: 1.1rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .menu {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .menu a { margin-left: 0; }
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .card.full { grid-column: span 2; }
+}
+
+@media (max-width: 700px) {
+  .grid { grid-template-columns: 1fr; }
+  .card.full { grid-column: span 1; }
+}
+
+/* CTA block used on programs page for consistent gutters */
+.cta-block {
+  width: 100%;
+  max-width: none;
+  margin: 0; /* remove auto-centering so it follows container edges */
+  box-sizing: border-box;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 901px) {
+  /* keep comfortable inner padding on larger screens */
+  .cta-block { padding-left: 2rem; padding-right: 2rem; }
+}
+
+.cta-block h3 { margin-top: 0; color: #004080; }
+
+.cta-block ol, .cta-block ul { margin: 0.75rem 0 0; }
+
+@media (max-width:900px) {
+  .cta-block { padding: 1rem; }
+}
+
+/* Contact page styles */
+.contact-block .contact-list { display:flex; flex-direction:column; gap:0.75rem; }
+.contact-block .contact-row { display:flex; gap:0.5rem; align-items:center; }
+.contact-block .contact-row strong { width:110px; color:#004080; }
+
+.social-links { display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center; }
+.social-links .social { background:#f1f5f9; padding:6px 10px; border-radius:8px; text-decoration:none; color:#004080; font-weight:600; }
+.social-links .social:hover { background:#e6f0fb; }
+
+@media (max-width:700px) {
+  .contact-block .contact-row strong { width: 90px; }
+
+  /* Stack social links vertically for mobile */
+  .social-links { flex-direction: column; align-items: flex-start; }
+  .social-links .social { display: inline-block; margin-top: 6px; }
+
+  /* Align label left and indent socials using grid */
+  .contact-row.social-links {
+    display: grid;
+    grid-template-columns: 90px 1fr; /* label column + content column */
+    gap: 0.5rem 0.75rem;
+    align-items: start;
+  }
+  .contact-row.social-links strong { grid-column: 1; margin: 0; }
+  .contact-row.social-links .social { grid-column: 2; margin-top: 6px; }
+}
+
+/* Wide-screen spacing for Ready to join, Enrollment Procedure, and Application Requirements */
+@media (min-width: 901px) {
+  /* Give noticeable separation between CTA sections */
+  .programs-cta {
+    margin-top: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  /* Slightly larger internal padding for CTA block on wide screens */
+  .programs-cta .cta-block {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+  }
+
+  /* Extra spacing when multiple CTA sections follow each other */
+  .programs-cta + .programs-cta { margin-top: 5px; }
+
+  /* Improve list spacing inside enrollment and requirements */
+  #enrollment-procedure .cta-block ol { margin-top: 0.75rem; padding-left: 1.25rem; }
+  #application-requirements .cta-block ul { margin-top: 0.75rem; padding-left: 1.25rem; }
+}
